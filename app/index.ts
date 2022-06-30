@@ -6,23 +6,27 @@ import { merge } from 'lodash';
 import { userTypeDefs } from './modules/users/schemas/user';
 import { userResolver } from './modules/users/resolvers/user.resolver';
 import { UserService } from './modules/users/services/user.service';
+import { genreTypeDefs } from './modules/genres/schemas/genre';
+import { genreResolver } from './modules/genres/resolvers/genre.resolver';
+import { GenreService } from './modules/genres/services/genre.service';
 
 config({ path: resolve(cwd(), '.env') });
-const { PORT } = process.env;
+
+const PORT = process.env.PORT || 4200;
 const resolvers = {};
 
 const server = new ApolloServer({
-  typeDefs: [userTypeDefs],
-  resolvers: merge(resolvers, userResolver),
+  typeDefs: [userTypeDefs, genreTypeDefs],
+  resolvers: merge(resolvers, userResolver, genreResolver),
   csrfPrevention: true,
   cache: 'bounded',
   dataSources: () => ({
     usersService: new UserService(),
+    genreService: new GenreService(),
   }),
-  context: ({ req }) => {
-    const token = req.headers.authorization || '';
-    return { token };
-  },
+  context: ({ req }) => ({
+    token: req.headers.authorization || '',
+  }),
 });
 
 server.listen({ port: PORT }).then(({ url }) => {
