@@ -1,8 +1,6 @@
 import { RequestOptions, RESTDataSource } from 'apollo-datasource-rest';
-import { URLS } from '../../consts';
-import {
-  Deleted, IGenre, IGenreResponse,
-} from '../genre.interface';
+import { Deleted, URLS } from '../../consts';
+import { IGenre, IGenreResponse } from '../genre.interface';
 
 export class GenreService extends RESTDataSource {
   constructor() {
@@ -16,9 +14,6 @@ export class GenreService extends RESTDataSource {
 
   async getGenreById(id: string): Promise<IGenreResponse> {
     const data = await this.get(`/${encodeURIComponent(id)}`);
-    if (data) {
-      data.id = data._id;
-    }
     return data;
   }
 
@@ -30,9 +25,6 @@ export class GenreService extends RESTDataSource {
 
   async createGenre(genre: IGenre): Promise<IGenreResponse> {
     const data = await this.post('', genre);
-    if (data) {
-      data.id = data._id;
-    }
     return data;
   }
 
@@ -46,9 +38,6 @@ export class GenreService extends RESTDataSource {
 
   async updateGenre(id: string, genre: IGenre): Promise<IGenreResponse> {
     const data = await this.put(`/${encodeURIComponent(id)}`, genre);
-    if (data) {
-      data.id = data._id;
-    }
     return data;
   }
 }

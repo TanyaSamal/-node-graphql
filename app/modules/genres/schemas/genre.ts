@@ -27,7 +27,7 @@ type Deleted {
 }
 
 type Mutation {
-  createGenre(genre: InputGenre): Genre
+  createGenre(genre: InputGenre!): Genre
   deleteGenre(id: ID!): Deleted
-  updateGenre(id: ID!, genre: InputGenre): Genre
+  updateGenre(id: ID!, genre: InputGenre!): Genre
 }`;

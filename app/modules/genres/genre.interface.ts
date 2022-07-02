@@ -8,8 +8,3 @@ export interface IGenre {
 export interface IGenreResponse extends IGenre {
   id: string,
 }
-
-export type Deleted = {
-  acknowledged: boolean,
-  deletedCount: number
-}

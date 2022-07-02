@@ -1,17 +1,31 @@
 export const genreResolver = {
   Query: {
-    genre: async (_, { id }, { dataSources }) => dataSources.genreService.getGenreById(id),
-    genres: async (_, __, { dataSources }) => dataSources.genreService.getAllGenres(),
+    genre: async (_, { id }, { dataSources }) => {
+      const res = await dataSources.genreService.getGenreById(id);
+      return res;
+    },
+    genres: async (_, __, { dataSources }) => {
+      const res = await dataSources.genreService.getAllGenres();
+      return res;
+    },
   },
   Mutation: {
     createGenre: async (_, { genre }, { dataSources }) => {
       const newGenre = { ...genre };
-      return dataSources.genreService.createGenre(newGenre);
+      const res = await dataSources.genreService.createGenre(newGenre);
+      return res;
     },
     updateGenre: async (_, { id, genre }, { dataSources }) => {
       const newGenre = { ...genre };
-      return dataSources.genreService.updateGenre(id, newGenre);
+      const res = await dataSources.genreService.updateGenre(id, newGenre);
+      return res;
     },
-    deleteGenre: async (_, { id }, { dataSources }) => dataSources.genreService.deleteGenre(id),
+    deleteGenre: async (_, { id }, { dataSources }) => {
+      const res = await dataSources.genreService.deleteGenre(id);
+      return res;
+    },
+  },
+  Genre: {
+    id: (parent) => parent._id,
   },
 };

@@ -1,4 +1,4 @@
-import { RequestOptions, RESTDataSource } from 'apollo-datasource-rest';
+import { RESTDataSource } from 'apollo-datasource-rest';
 import { URLS } from '../../consts';
 import { IUser, IUserResponse } from '../user.interface';
 
