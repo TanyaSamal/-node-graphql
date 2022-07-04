@@ -3,19 +3,19 @@ import { gql } from 'apollo-server';
 export const genreTypeDefs = gql`
 type Genre {
   id: ID!
-  name: String
+  name: String!
   description: String
   country: String
   year: Int
 }
 
 extend type Query {
-  genres: [Genre]
+  genres(limit: Int, offset: Int): [Genre]
   genre(id: ID!): Genre
 }
 
 input InputGenre {
-  name: String
+  name: String!
   description: String
   country: String
   year: Int
@@ -27,7 +27,7 @@ type Deleted {
 }
 
 type Mutation {
-  createGenre(genre: InputGenre!): Genre
+  createGenre(genre: InputGenre!): Genre!
   deleteGenre(id: ID!): Deleted
-  updateGenre(id: ID!, genre: InputGenre!): Genre
+  updateGenre(id: ID!, genre: InputGenre!): Genre!
 }`;

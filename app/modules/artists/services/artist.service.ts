@@ -22,8 +22,8 @@ export class ArtistService extends RESTDataSource {
     return data;
   }
 
-  async getAllArtists(): Promise<IArtist[]> {
-    const data = await this.get('/');
+  async getAllArtists(limit: number = 5, offset: number = 0): Promise<IArtist[]> {
+    const data = await this.get('/', { limit, offset });
 
     data.items.forEach((artist) => {
       artist.id = artist._id;
@@ -56,10 +56,7 @@ export class ArtistService extends RESTDataSource {
   }
 
   async deleteArtist(id: string): Promise<Deleted> {
-    await this.delete(`/${encodeURIComponent(id)}`);
-    return {
-      acknowledged: true,
-      deletedCount: 1,
-    };
+    const data = await this.delete(`/${encodeURIComponent(id)}`);
+    return data;
   }
 }

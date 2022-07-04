@@ -4,8 +4,8 @@ export const albumResolver = {
       const res = await dataSources.albumService.getAlbumById(id);
       return res;
     },
-    albums: async (_, __, { dataSources }) => {
-      const res = await dataSources.albumService.getAllAlbums();
+    albums: async (_, { limit, offset }, { dataSources }) => {
+      const res = await dataSources.albumService.getAllAlbums(limit, offset);
       return res;
     },
   },

@@ -3,8 +3,8 @@ import { gql } from 'apollo-server';
 export const artistTypeDefs = gql`
 type Artist {
   id: ID!
-  firstName: String
-  secondName: String
+  firstName: String!
+  secondName: String!
   middleName: String
   birthDate: String
   birthPlace: String
@@ -14,13 +14,13 @@ type Artist {
 }
 
 type Query {
-  artists: [Artist]
+  artists(limit: Int, offset: Int): [Artist]
   artist(id: ID!): Artist
 }
 
 input InputArtist {
-  firstName: String
-  secondName: String
+  firstName: String!
+  secondName: String!
   middleName: String
   birthDate: String
   birthPlace: String
@@ -35,7 +35,7 @@ type Deleted {
 }
 
 type Mutation {
-  createArtist(artist: InputArtist!): Artist
+  createArtist(artist: InputArtist!): Artist!
   deleteArtist(id: ID!): Deleted
-  updateArtist(id: ID!, artist: InputArtist!): Artist
+  updateArtist(id: ID!, artist: InputArtist!): Artist!
 }`;

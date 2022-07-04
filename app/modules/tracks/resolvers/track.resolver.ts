@@ -4,8 +4,8 @@ export const trackResolver = {
       const res = await dataSources.trackService.getTrackById(id);
       return res;
     },
-    tracks: async (_, __, { dataSources }) => {
-      const res = await dataSources.trackService.getAllTracks();
+    tracks: async (_, { limit, offset }, { dataSources }) => {
+      const res = await dataSources.trackService.getAllTracks(limit, offset);
       return res;
     },
   },

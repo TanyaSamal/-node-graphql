@@ -17,8 +17,9 @@ export class AlbumService extends RESTDataSource {
     return data;
   }
 
-  async getAllAlbums(): Promise<IAlbum[]> {
-    const data = await this.get('/');
+  async getAllAlbums(limit: number = 5, offset: number = 0): Promise<IAlbum[]> {
+    const data = await this.get('/', { limit, offset });
+    data.items.forEach((album) => album.id = album._id);
     return data.items;
   }
 

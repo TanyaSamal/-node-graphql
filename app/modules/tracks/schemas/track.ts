@@ -12,7 +12,7 @@ type Track {
 }
 
 extend type Query {
-  tracks: [Track]
+  tracks(limit: Int, offset: Int): [Track]
   track(id: ID!): Track
 }
 

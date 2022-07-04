@@ -4,8 +4,8 @@ export const genreResolver = {
       const res = await dataSources.genreService.getGenreById(id);
       return res;
     },
-    genres: async (_, __, { dataSources }) => {
-      const res = await dataSources.genreService.getAllGenres();
+    genres: async (_, { limit, offset }, { dataSources }) => {
+      const res = await dataSources.genreService.getAllGenres(limit, offset);
       return res;
     },
   },

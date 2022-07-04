@@ -3,7 +3,7 @@ import { gql } from 'apollo-server';
 export const bandTypeDefs = gql`
 type Band {
   id: ID!
-  name: String
+  name: String!
   origin: String
   members: [Member]
   website: String

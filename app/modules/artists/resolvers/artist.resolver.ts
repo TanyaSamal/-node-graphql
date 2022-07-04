@@ -4,8 +4,8 @@ export const artistResolver = {
       const res = await dataSources.artistService.getArtistById(id);
       return res;
     },
-    artists: async (_, __, { dataSources }) => {
-      const res = await dataSources.artistService.getAllArtists();
+    artists: async (_, { limit, offset }, { dataSources }) => {
+      const res = await dataSources.artistService.getAllArtists(limit, offset);
       return res;
     },
   },
@@ -27,8 +27,8 @@ export const artistResolver = {
   },
   Artist: {
     id: (parent) => parent._id,
-    bands: async (parent, _, { dataSources }) => {
-      const res = await Promise.all(parent.bandsIds
+    bands: async ({ bandsIds }, _, { dataSources }) => {
+      const res = await Promise.all(bandsIds
         .map((bandId) => dataSources.bandService.getBandById(bandId)));
       return res;
     },

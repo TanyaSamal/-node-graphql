@@ -17,8 +17,8 @@ export class GenreService extends RESTDataSource {
     return data;
   }
 
-  async getAllGenres(): Promise<IGenre[]> {
-    const data = await this.get('/');
+  async getAllGenres(limit: number = 5, offset: number = 0): Promise<IGenre[]> {
+    const data = await this.get('/', { limit, offset });
     data.items.forEach((genre) => genre.id = genre._id);
     return data.items;
   }
@@ -29,11 +29,8 @@ export class GenreService extends RESTDataSource {
   }
 
   async deleteGenre(id: string): Promise<Deleted> {
-    await this.delete(`/${encodeURIComponent(id)}`);
-    return {
-      acknowledged: true,
-      deletedCount: 1,
-    };
+    const data = await this.delete(`/${encodeURIComponent(id)}`);
+    return data;
   }
 
   async updateGenre(id: string, genre: IGenre): Promise<IGenreResponse> {
