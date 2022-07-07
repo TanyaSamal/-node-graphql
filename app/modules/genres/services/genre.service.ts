@@ -14,13 +14,23 @@ export class GenreService extends RESTDataSource {
 
   async getGenreById(id: string): Promise<IGenreResponse> {
     const data = await this.get(`/${encodeURIComponent(id)}`);
+
+    if (!data) {
+      throw new Error('Genre not found');
+    }
+
     return data;
   }
 
   async getAllGenres(limit: number = 5, offset: number = 0): Promise<IGenre[]> {
     const data = await this.get('/', { limit, offset });
-    data.items.forEach((genre) => genre.id = genre._id);
-    return data.items;
+
+    if (!data) {
+      throw new Error('Genres not found');
+    } else {
+      data.items.forEach((genre) => genre.id = genre._id);
+      return data.items;
+    }
   }
 
   async createGenre(genre: IGenre): Promise<IGenreResponse> {

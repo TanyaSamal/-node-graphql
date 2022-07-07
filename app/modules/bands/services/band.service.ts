@@ -14,13 +14,23 @@ export class BandService extends RESTDataSource {
 
   async getBandById(id: string): Promise<IBandResponse> {
     const data = await this.get(`/${encodeURIComponent(id)}`);
+
+    if (!data) {
+      throw new Error('Band not found');
+    }
+
     return data;
   }
 
   async getAllBands(limit: number = 5, offset: number = 0): Promise<IBand[]> {
     const data = await this.get('/', { limit, offset });
-    data.items.forEach((band) => band.id = band._id);
-    return data.items;
+
+    if (!data) {
+      throw new Error('Bands not found');
+    } else {
+      data.items.forEach((band) => band.id = band._id);
+      return data.items;
+    }
   }
 
   async createBand(band: IBand): Promise<IBandResponse> {

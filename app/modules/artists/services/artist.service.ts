@@ -15,6 +15,10 @@ export class ArtistService extends RESTDataSource {
   async getArtistById(id: string): Promise<IArtistResponse> {
     const data = await this.get(`/${encodeURIComponent(id)}`);
 
+    if (!data) {
+      throw new Error('Artist not found');
+    }
+
     if (data.instruments && Array.isArray(data.instruments)) {
       data.instruments = data.instruments.join(', ');
     }
@@ -24,6 +28,10 @@ export class ArtistService extends RESTDataSource {
 
   async getAllArtists(limit: number = 5, offset: number = 0): Promise<IArtist[]> {
     const data = await this.get('/', { limit, offset });
+
+    if (!data) {
+      throw new Error('Artists not found');
+    }
 
     data.items.forEach((artist) => {
       artist.id = artist._id;

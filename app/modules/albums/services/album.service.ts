@@ -14,13 +14,23 @@ export class AlbumService extends RESTDataSource {
 
   async getAlbumById(id: string): Promise<IAlbumResponse> {
     const data = await this.get(`/${encodeURIComponent(id)}`);
+
+    if (!data) {
+      throw new Error('Album not found');
+    }
+
     return data;
   }
 
   async getAllAlbums(limit: number = 5, offset: number = 0): Promise<IAlbum[]> {
     const data = await this.get('/', { limit, offset });
-    data.items.forEach((album) => album.id = album._id);
-    return data.items;
+
+    if (!data) {
+      throw new Error('Albums not found');
+    } else {
+      data.items.forEach((album) => album.id = album._id);
+      return data.items;
+    }
   }
 
   async createAlbum(album: IAlbum): Promise<IAlbumResponse> {

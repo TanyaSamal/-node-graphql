@@ -39,7 +39,7 @@ export const trackResolver = {
     },
     albums: async ({ albumId }, _, { dataSources }) => {
       if (albumId) {
-        const res = await dataSources.albumeService.getAlbumById(albumId);
+        const res = await dataSources.albumService.getAlbumById(albumId);
         return [res];
       }
       return [];
